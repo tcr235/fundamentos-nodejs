@@ -2,8 +2,8 @@
 
 # Requisitos
 
- - [] Criar conta
- - [] Buscar extrato bancario
+ - [X] Criar conta
+ - [X] Buscar extrato bancario
  - [] Realizar um deposito
  - [] Realizar um saque
  - [] Buscar extrato por data
