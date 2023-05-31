@@ -11,6 +11,23 @@ app.use(express.json());
 //"banco de dados" temporario
 const customers = [];
 
+//Middleware para verificação de conta
+function verifyIfExistsAccountCPF(request, response, next) {
+    const { cpf } = request.headers;
+
+    //find pode ser utilizado quando queremos o valor do que esta sendo buscado
+    const customer = customers.find(customer => customer.cpf === cpf);
+    
+    if (!customer) {
+        return response.status(400).json({ error: "Customer not found" });
+    };
+
+    request.customer = customer;
+
+    return next();
+}
+
+
 app.post("/account", (request, response) => {
     const { cpf, name } = request.body;
 
@@ -33,17 +50,29 @@ app.post("/account", (request, response) => {
     return response.status(201).send();
 });
 
+app.use(verifyIfExistsAccountCPF);
+
 app.get("/statement", (request, response) => {
-    const { cpf } = request.headers;
-
-    //find pode ser utilizado quando queremos o valor do que esta sendo buscado
-    const customer = customers.find(customer => customer.cpf === cpf);
-
-    if (!customer) {
-        return response.status(400).json({ error: "Customer not found" });
-    };
+    //pegando a informação "customer" de dentro do request (passado pelo middleware pelo "request.customer=customer;")
+    const { customer } = request;
 
     return response.json(customer.statement);
+
+});
+
+app.post("/deposit", (request, response) => {
+    const { description, amount } = request.body;
+    const { customer } = request;
+    const statementOperation = {
+        description,
+        amount,
+        created_at: new Date(),
+        type: "credit"
+    }
+
+    customer.statement.push(statementOperation);
+
+    return response.status(201).send();
 });
 
 app.listen(3333);

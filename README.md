@@ -4,7 +4,7 @@
 
  - [X] Criar conta
  - [X] Buscar extrato bancario
- - [] Realizar um deposito
+ - [X] Realizar um deposito
  - [] Realizar um saque
  - [] Buscar extrato por data
  - [] Atualizar dados da conta
