@@ -110,4 +110,18 @@ app.post("/withdraw", (request, response) => {
 
 });
 
+app.get("/statement/date", (request, response) => {
+    //pegando a informação "customer" de dentro do request (passado pelo middleware pelo "request.customer=customer;")
+    const { customer } = request;
+    const { date } = request.query;
+    const dateFormat = new Date(date + " 00:00"); //usado para buscar pelo dia, independente do horário da transação
+    const statement = customer.statement.filter((statement) => statement.created_at.toDateString() === new Date
+    (dateFormat).toDateString());
+
+
+    return response.json(statement);
+
+});
+
+
 app.listen(3333);
