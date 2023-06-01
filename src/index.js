@@ -138,4 +138,21 @@ app.get("/account", (request, response) => {
     return response.json(customer);
 });
 
+app.delete("/account", (request, response) => {
+    const { customer } = request;
+
+    customers.splice(customer, 1); //função usada para remover elemento de array
+    //deve-se passar dois parâmetros: o primeiro é o objeto que a gente quer excluir e o segundo é até onde vai ser a remoção
+    //ou seja, uma posição depois do customer.
+
+    return response.status(200).json(customers)
+});
+
+app.get("/balance", (request, response) => {
+    const { customer } = request;
+    const balance = getBalance(customer.statement);
+
+    return response.json(balance);
+});
+
 app.listen(3333);

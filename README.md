@@ -9,4 +9,5 @@
  - [X] Buscar extrato por data
  - [X] Atualizar dados da conta
  - [X] Obter dados da conta
- - [] Deletar uma conta
+ - [X] Deletar uma conta
+ - [X] Deve ser possível retornar o balanço da conta
