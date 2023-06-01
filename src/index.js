@@ -123,5 +123,19 @@ app.get("/statement/date", (request, response) => {
 
 });
 
+app.put("/account", (request, response) => {
+    const { name } = request.body;
+    const { customer } = request;
+
+    customer.name = name;
+
+    return response.status(201).send();
+});
+
+app.get("/account", (request, response) => {
+    const { customer } = request;
+
+    return response.json(customer);
+});
 
 app.listen(3333);
